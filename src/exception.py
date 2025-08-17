@@ -4,10 +4,10 @@ from src.logger import logging
 
 def error_message_details(error,error_detail:sys):
     # return type of sys gives me 
-    _,_,exc_tb=error_detail.exec_info()
-    file_name=exc_tb.tb_frame.f_code.co_filename
+    _,_,exc_info=error_detail.exec_info()
+    file_name=exc_info.tb_frame.f_code.co_filename
     error_message="error occured in py script name [{0}] line number [{1}] with error message [{2}]".format(
-        file_name,exc_tb.tb_lineno,str(error)
+        file_name,exc_info.tb_lineno,str(error)
     )
     return error_message
 
