@@ -1,5 +1,6 @@
 # exception or error handling
 import sys
+from src.logger import logging
 
 def error_message_details(error,error_detail:sys):
     # return type of sys gives me 
