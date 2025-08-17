@@ -10,6 +10,7 @@ from src.logger import logging
 import pickle
 import dill
 from sklearn.metrics import r2_score
+from sklearn.model_selection import GridSearchCV
 
 def save_object(file_path, obj):
     try:
@@ -26,18 +27,30 @@ def save_object(file_path, obj):
         raise CustomException(e, sys)
     
     
-def evaluate_model(X_train,y_train,X_test,y_test,models):
+def evaluate_model(X_train,y_train,X_test,y_test,models,params):
     
     try:
         logging.info("starting to evaluate the model")
         report={}
         
         logging.info("running through each model")
+        
         for i in range(len(list(models))):
             
             model=list(models.values())[i]
+            # get the hyper-parameter tuning parameter wrt to each model
+            param=params[list(models.keys())[i]]
             
-            model.fit(X_train,y_train)
+            gs=GridSearchCV(model,param,cv=3)
+            gs.fit(X_train,y_train)
+            # model.fit(X_train,y_train)
+            
+            logging.info("checking the best parameter after hyper param tuning")
+            
+            model.set_params(**gs.best_params_)
+                    
+            # evaluate the model
+            model=model.fit(X_train,y_train)
             
             logging.info("predicted the y values based on x test")
 

@@ -60,5 +60,5 @@ if __name__=="__main__":
     data_transformation=DataTransformation()
     train_data,test_data,preprocessor_path=data_transformation.initiate_data_transformation(train_data_path,test_data_path)
     model_trainer=ModelTrainer()
-    r2_score=model_trainer.initiate_model_trainer(train_data,test_data,preprocessor_path)
-    print(r2_score)
+    r2_score,best_model_name=model_trainer.initiate_model_trainer(train_data,test_data,preprocessor_path)
+    print(r2_score,best_model_name)
